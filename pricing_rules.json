@@ -1,0 +1,17 @@
+{
+  "minimumCharge": 50,
+  "services": {
+    "Airbnb / Vacation Rental Cleaning": {"label": "Airbnb turnover cleaning", "minimumRate": 0.07, "maximumRate": 0.09},
+    "Standard Home Cleaning": {"label": "Standard home cleaning", "minimumRate": 0.10, "maximumRate": 0.12},
+    "Deep Cleaning": {"label": "Deep cleaning", "minimumRate": 0.18, "maximumRate": 0.20},
+    "Move Out Cleaning": {"label": "Move-out cleaning", "minimumRate": 0.20, "maximumRate": 0.25}
+  },
+  "conditionRules": [
+    {"keywords": ["heavy", "very dirty", "filthy", "neglected", "buildup", "build-up", "grease", "stains", "hasn't been cleaned", "not been cleaned"], "weight": 2, "explanation": "Description indicates heavier-than-normal buildup"},
+    {"keywords": ["pet", "pets", "dog", "dogs", "cat", "cats", "pet hair", "odor", "odour"], "weight": 1, "explanation": "Pet-related cleaning was mentioned"},
+    {"keywords": ["dirty dishes", "dishes", "pots and pans", "sink full", "loaded sink"], "weight": 1, "explanation": "Dishwashing or kitchen reset work was mentioned"},
+    {"keywords": ["extra trash", "excess trash", "a lot of trash", "garbage", "rubbish", "trash removal", "bags of trash"], "weight": 1, "explanation": "Additional trash removal was mentioned"},
+    {"keywords": ["inside oven", "oven", "refrigerator", "fridge", "inside cabinets", "cabinet interiors", "baseboards", "blinds", "windows"], "weight": 1, "explanation": "Detailed appliance or specialty cleaning was mentioned"},
+    {"keywords": ["light", "light cleaning", "well maintained", "well-maintained", "already clean", "minimal"], "weight": -1, "explanation": "Description indicates a light or well-maintained condition"}
+  ]
+}
