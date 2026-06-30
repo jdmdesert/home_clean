@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Elevated home cleaning and landscaping across Arizona's East Valley.">
+  <title>East Valley Home Solutions | Cleaning & Landscaping</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="East Valley Home Solutions home">
+      <span class="brand-mark">EV</span>
+      <span><strong>East Valley</strong><small>Home Solutions</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#services">Services</a>
+      <a href="#about">Our approach</a>
+      <a href="#areas">Service area</a>
+    </nav>
+    <div class="header-actions">
+      <a class="social-link" href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3 0-5 2-5 5v2H6v4h3v7h4v-7h3l1-4h-4V9c0-.6.4-1 1-1Z"/></svg>
+      </a>
+      <a class="social-link" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <button class="contact-trigger" type="button" aria-expanded="false">Contact now <span>↗</span></button>
+    </div>
+    <div class="contact-popover" aria-hidden="true">
+      <p>How can we help?</p>
+      <a href="tel:+14805550184"><span>Call</span><strong>(480) 555-0184</strong></a>
+      <a href="sms:+14805550184"><span>Text</span><strong>Send us an SMS</strong></a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow light">Cleaning · Landscaping · East Valley</p>
+        <h1>Your home,<br><em>beautifully handled.</em></h1>
+        <p class="hero-copy">Thoughtful home care for the way you live—delivered with meticulous detail, local expertise, and a refreshingly personal touch.</p>
+        <div class="hero-actions">
+          <a class="button gold" href="#quote">Request a quote <span>→</span></a>
+          <a class="text-link light" href="#services">Explore our services <span>↓</span></a>
+        </div>
+      </div>
+      <div class="hero-proof">
+        <span>Serving</span>
+        <strong>Arizona's<br>East Valley</strong>
+      </div>
+      <div class="scroll-cue">Scroll to discover</div>
+    </section>
+
+    <section class="intro" id="about">
+      <div>
+        <p class="eyebrow">One trusted team</p>
+        <h2>More time for what<br><em>makes a house a home.</em></h2>
+      </div>
+      <div class="intro-copy">
+        <p>From pristine interiors to polished outdoor spaces, we care for the details that make your home feel effortless.</p>
+        <p>Locally focused. Thoroughly vetted. Proudly serving our East Valley neighbors.</p>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <article class="service-card cleaning-card">
+        <div class="card-number">01</div>
+        <div class="card-content">
+          <p class="eyebrow light">Interior care</p>
+          <h3>Home<br>Cleaning</h3>
+          <p>Quietly meticulous cleaning, tailored to your home and your rhythm.</p>
+          <button type="button" class="card-link" data-service="Standard Home Cleaning">Get a cleaning quote <span>↗</span></button>
+        </div>
+      </article>
+      <article class="service-card landscape-card">
+        <div class="card-number">02</div>
+        <div class="card-content">
+          <p class="eyebrow light">Outdoor care</p>
+          <h3>Landscape<br>Services</h3>
+          <p>Refined, desert-smart outdoor care designed for Arizona living.</p>
+          <button type="button" class="card-link" data-service="Landscaping">Get a landscape quote <span>↗</span></button>
+        </div>
+      </article>
+    </section>
+
+    <section class="quote-section" id="quote">
+      <div class="quote-heading">
+        <p class="eyebrow">A simple beginning</p>
+        <h2>Tell us about<br><em>your home.</em></h2>
+        <p>Share a few details and our local team will be in touch with a personalized estimate.</p>
+        <div class="mini-testimonial">
+          <span>“</span>
+          <p>Reliable, thoughtful, and our home has never looked better.</p>
+          <small>— East Valley homeowner</small>
+        </div>
+      </div>
+      <form class="quote-form" id="quoteForm">
+        <div class="form-row">
+          <label>First name<input type="text" name="firstName" placeholder="Jane" required></label>
+          <label>Last name<input type="text" name="lastName" placeholder="Smith" required></label>
+        </div>
+        <div class="form-row">
+          <label>Phone number<input type="tel" name="phone" placeholder="(480) 555-0123" required></label>
+          <label>Email address<input type="email" name="email" placeholder="jane@email.com" required></label>
+        </div>
+        <div class="form-row">
+          <label>Home square footage<input type="number" name="squareFeet" min="1" placeholder="2,000" required></label>
+          <label>City
+            <select name="city" required>
+              <option value="">Select your city</option><option>Gilbert</option><option>Mesa</option>
+              <option>Queen Creek</option><option>Tempe</option><option>Chandler</option>
+              <option>San Tan Valley</option><option>Apache Junction</option><option>Other East Valley</option>
+            </select>
+          </label>
+        </div>
+        <label>Service needed
+          <select name="service" id="serviceSelect" required>
+            <option value="">Choose a service</option>
+            <optgroup label="Cleaning">
+              <option>Airbnb / Vacation Rental Cleaning</option><option>Standard Home Cleaning</option>
+              <option>Deep Cleaning</option><option>Recurring Cleaning</option><option>Move In Cleaning</option>
+              <option>Move Out Cleaning</option><option>Post Construction Cleaning</option>
+              <option>Office / Commercial Cleaning</option><option>Carpet Cleaning</option>
+            </optgroup>
+            <optgroup label="Landscaping"><option>Landscaping</option><option>Landscape Maintenance</option><option>Yard Cleanup</option></optgroup>
+            <option>Other</option>
+          </select>
+        </label>
+        <label class="other-field" id="otherField">Tell us what you need
+          <textarea name="otherService" rows="3" placeholder="Describe the service you have in mind…"></textarea>
+        </label>
+        <label>Please explain the work you would like done and we can give you an estimated quote right here and now.
+          <textarea name="notes" rows="4" required placeholder="Describe the size, condition, timing, and any special requests…"></textarea>
+        </label>
+        <button class="button dark submit-button" type="submit">Calculate my instant estimate <span>→</span></button>
+        <p class="form-note">This instant estimate is based on the information provided and is subject to confirmation.</p>
+        <div class="estimate-result" role="status" aria-live="polite"></div>
+        <div class="estimate-decision" aria-live="polite">
+          <p>Would you like to accept this estimate?</p>
+          <div class="decision-buttons">
+            <button type="button" class="decision-button accept-estimate">Accept estimate</button>
+            <button type="button" class="decision-button reject-estimate">Reject estimate</button>
+          </div>
+          <div class="rejection-panel">
+            <label>Why are you rejecting this estimate?
+              <select id="rejectionReason">
+                <option value="">Select a reason</option>
+                <option>Price Too High</option>
+                <option>Cheaper Competitor</option>
+                <option>Just wanted an estimate</option>
+                <option>I'll clean it myself</option>
+                <option>Timing doesn't work</option>
+              </select>
+            </label>
+            <button type="button" class="decision-button submit-rejection">Submit reason</button>
+          </div>
+          <p class="decision-status"></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="areas" id="areas">
+      <p class="eyebrow light">Rooted right here</p>
+      <h2>Proudly serving<br><em>the East Valley.</em></h2>
+      <div class="city-list">
+        <span>Gilbert</span><span>Mesa</span><span>Queen Creek</span><span>Tempe</span>
+        <span>Chandler</span><span>San Tan Valley</span><span>Apache Junction</span><span>& beyond</span>
+      </div>
+    </section>
+
+    <section class="careers">
+      <div>
+        <p class="eyebrow">Grow with us</p>
+        <h2>Do work you're<br><em>proud to stand behind.</em></h2>
+      </div>
+      <div class="career-cta">
+        <p>Want to work for us? <a href="mailto:careers@eastvalleyhomesolutions.com">Click here <span>→</span></a></p>
+        <p>¿Quieres trabajar con nosotros? <a href="mailto:careers@eastvalleyhomesolutions.com">Haz clic aquí <span>→</span></a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-main">
+      <a class="brand footer-brand" href="#top"><span class="brand-mark">EV</span><span><strong>East Valley</strong><small>Home Solutions</small></span></a>
+      <div><p class="footer-label">Explore</p><a href="#services">Services</a><a href="#about">Our approach</a><a href="#areas">Service area</a><a href="#quote">Get a quote</a></div>
+      <div><p class="footer-label">Contact</p><a href="tel:+14805550184">(480) 555-0184</a><a href="mailto:hello@eastvalleyhomesolutions.com">hello@eastvalley<br>homesolutions.com</a><a href="sms:+14805550184">Send a text</a></div>
+      <div><p class="footer-label">Follow</p><a href="https://instagram.com">Instagram ↗</a><a href="https://facebook.com">Facebook ↗</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 East Valley Home Solutions</span><span>Arizona ROC licensing information, if applicable</span><span><a href="#">Privacy</a> · <a href="#">Terms</a></span></div>
+  </footer>
+</body>
+</html>
