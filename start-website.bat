@@ -1,8 +1,8 @@
 @echo off
-title East Valley Home Solutions
+title Steadfast & Co. Cleaning
 cd /d "%~dp0"
 echo.
-echo  East Valley Home Solutions is starting...
+echo  Steadfast & Co. Cleaning is starting...
 echo.
 echo  Open this address in your browser:
 echo  http://127.0.0.1:8080

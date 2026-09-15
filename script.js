@@ -46,13 +46,10 @@ quoteForm.addEventListener('submit', async (event) => {
   button.textContent = 'Calculating…';
   result.className = 'estimate-result';
   try {
-    const response = await fetch('/api/estimate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    const estimate = await response.json();
-    if (!response.ok) throw new Error(estimate.error || 'Unable to calculate estimate.');
+    const rulesResponse = await fetch('./pricing_rules.json');
+    if (!rulesResponse.ok) throw new Error('Pricing information could not be loaded. Please refresh and try again.');
+    const rules = await rulesResponse.json();
+    const estimate = calculateEstimate(data, rules);
     const reasons = estimate.adjustments.map((item) => `<li>${item}</li>`).join('');
     result.innerHTML = `<p class="estimate-label">Your instant estimated quote</p>
       <p class="estimate-price">$${estimate.estimateLow.toLocaleString()} – $${estimate.estimateHigh.toLocaleString()}</p>
@@ -60,15 +57,13 @@ quoteForm.addEventListener('submit', async (event) => {
       <ul><li>${estimate.service}</li>${reasons}</ul>
       <p class="estimate-disclaimer">Estimate only. Final price may change if the on-site scope differs from the information provided.</p>`;
     result.classList.add('show');
-    currentEstimateId = estimate.estimateId;
+    currentEstimateId = crypto.randomUUID ? crypto.randomUUID() : String(Date.now());
     decisionPanel.classList.add('show');
     decisionPanel.querySelector('.rejection-panel').classList.remove('show');
     decisionPanel.querySelector('.decision-status').textContent = '';
     result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   } catch (error) {
-    const message = error instanceof TypeError && error.message.includes('fetch')
-      ? 'The estimator service is not running. Start the website with start-website.bat, then use the address shown in that window.'
-      : error.message;
+    const message = error.message || 'Unable to calculate an estimate. Please try again.';
     result.innerHTML = `<p class="estimate-error">${message}</p>`;
     result.classList.add('show');
   } finally {
@@ -77,19 +72,44 @@ quoteForm.addEventListener('submit', async (event) => {
   }
 });
 
+function calculateEstimate(data, rules) {
+  const service = rules.services[data.service];
+  const squareFeet = Number(data.squareFeet);
+  const description = `${data.notes || ''} ${data.otherService || ''}`.toLowerCase();
+  if (!Number.isFinite(squareFeet) || squareFeet <= 0) throw new Error('Please enter the home’s square footage.');
+  if (!description.trim()) throw new Error('Please describe the work you would like completed.');
+  if (!service) throw new Error('Instant pricing is currently available for Airbnb turnover, standard, deep, and move-out cleaning. Please contact us for a custom quote.');
+
+  let score = 0;
+  const adjustments = [];
+  rules.conditionRules.forEach((rule) => {
+    if (rule.keywords.some((keyword) => description.includes(keyword))) {
+      score += Number(rule.weight);
+      adjustments.push(rule.explanation);
+    }
+  });
+  const lowerPositions = { '-1': 0, '0': 0.25, '1': 0.55 };
+  const upperPositions = { '-1': 0.25, '0': 0.55, '1': 0.8 };
+  const lowerPosition = lowerPositions[String(score)] ?? 0.8;
+  const upperPosition = upperPositions[String(score)] ?? 1;
+  const lowerRate = service.minimumRate + ((service.maximumRate - service.minimumRate) * lowerPosition);
+  const upperRate = service.minimumRate + ((service.maximumRate - service.minimumRate) * upperPosition);
+  const estimateLow = Math.max(Math.ceil(rules.minimumCharge), Math.ceil(squareFeet * lowerRate));
+  const rawHigh = Math.max(rules.minimumCharge, squareFeet * upperRate);
+  const estimateHigh = Math.max(Math.ceil(rawHigh * 1.05), Math.ceil(estimateLow * 1.1));
+  if (estimateLow === Math.ceil(rules.minimumCharge) && squareFeet * lowerRate < rules.minimumCharge) {
+    adjustments.push(`$${Math.ceil(rules.minimumCharge)} minimum service charge applied`);
+  }
+  if (!adjustments.length) adjustments.push('Standard condition assumed from your description');
+  return { service: service.label, estimateLow, estimateHigh, adjustments };
+}
+
 async function submitDecision(decision, reason = '') {
   if (!currentEstimateId) return;
-  const response = await fetch('/api/decision', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ estimateId: currentEstimateId, decision, reason })
-  });
-  const result = await response.json();
-  if (!response.ok) throw new Error(result.error || 'Unable to save your response.');
   decisionPanel.querySelector('.decision-status').textContent =
     decision === 'accepted'
-      ? 'Thank you—your estimate has been accepted. We will contact you to confirm the details.'
-      : 'Thank you. Your feedback has been recorded.';
+      ? 'Thank you—please call or text us to confirm the estimate and schedule your service.'
+      : `Thank you. ${reason ? 'Your feedback has been noted for this visit.' : ''}`;
   decisionPanel.querySelectorAll('button').forEach((button) => { button.disabled = true; });
 }
 

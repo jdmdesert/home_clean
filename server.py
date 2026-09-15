@@ -117,7 +117,7 @@ class EstimateHandler(SimpleHTTPRequestHandler):
                          "customer": payload, "estimate": result}
                 write_log(event)
                 try:
-                    result["emailSent"] = email_event("New East Valley estimate calculated", event)
+                    result["emailSent"] = email_event("New Steadfast & Co. Cleaning estimate calculated", event)
                 except (OSError, smtplib.SMTPException):
                     result["emailSent"] = False
             else:
@@ -153,5 +153,5 @@ class EstimateHandler(SimpleHTTPRequestHandler):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", "8000"))
     host = os.environ.get("HOST", "127.0.0.1")
-    print(f"East Valley Home Solutions running at http://{host}:{port}")
+    print(f"Steadfast & Co. Cleaning running at http://{host}:{port}")
     ThreadingHTTPServer((host, port), EstimateHandler).serve_forever()
