@@ -46,6 +46,12 @@ Cause and landed fix:
 - Bumped the calculator script URL to `script.js?v=3` so GitHub Pages visitors do not combine the new form with cached older JavaScript.
 - Kept the pricing rates unchanged rather than inventing prices for unsupported services.
 
+Follow-up correction:
+
+- A screenshot showed the site was being opened directly from `index.html` on macOS rather than through a web server. Safari blocks `fetch('./pricing_rules.json')` from a `file://` page, which caused the visible `Load failed` message.
+- Embedded a matching fallback copy of the approved pricing rules in `script.js`. The calculator now works when opened as a local file and when hosted; the hosted version still loads `pricing_rules.json` when available.
+- Bumped the deployed script URL to `script.js?v=4`.
+
 ### Cleaning-only focus
 
 Requested:

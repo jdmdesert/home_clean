@@ -5,6 +5,24 @@ const quoteForm = document.querySelector('#quoteForm');
 const decisionPanel = document.querySelector('.estimate-decision');
 let currentEstimateId = null;
 
+const fallbackPricingRules = {
+  minimumCharge: 50,
+  services: {
+    'Airbnb / Vacation Rental Cleaning': { label: 'Airbnb turnover cleaning', minimumRate: 0.07, maximumRate: 0.09 },
+    'Standard Home Cleaning': { label: 'Standard home cleaning', minimumRate: 0.10, maximumRate: 0.12 },
+    'Deep Cleaning': { label: 'Deep cleaning', minimumRate: 0.18, maximumRate: 0.20 },
+    'Move Out Cleaning': { label: 'Move-out cleaning', minimumRate: 0.20, maximumRate: 0.25 },
+  },
+  conditionRules: [
+    { keywords: ['heavy', 'very dirty', 'filthy', 'neglected', 'buildup', 'build-up', 'grease', 'stains', "hasn't been cleaned", 'not been cleaned'], weight: 2, explanation: 'Description indicates heavier-than-normal buildup' },
+    { keywords: ['pet', 'pets', 'dog', 'dogs', 'cat', 'cats', 'pet hair', 'odor', 'odour'], weight: 1, explanation: 'Pet-related cleaning was mentioned' },
+    { keywords: ['dirty dishes', 'dishes', 'pots and pans', 'sink full', 'loaded sink'], weight: 1, explanation: 'Dishwashing or kitchen reset work was mentioned' },
+    { keywords: ['extra trash', 'excess trash', 'a lot of trash', 'garbage', 'rubbish', 'trash removal', 'bags of trash'], weight: 1, explanation: 'Additional trash removal was mentioned' },
+    { keywords: ['inside oven', 'oven', 'refrigerator', 'fridge', 'inside cabinets', 'cabinet interiors', 'baseboards', 'blinds', 'windows'], weight: 1, explanation: 'Detailed appliance or specialty cleaning was mentioned' },
+    { keywords: ['light', 'light cleaning', 'well maintained', 'well-maintained', 'already clean', 'minimal'], weight: -1, explanation: 'Description indicates a light or well-maintained condition' },
+  ],
+};
+
 contactButton.addEventListener('click', () => {
   const open = contactPopover.classList.toggle('open');
   contactButton.setAttribute('aria-expanded', String(open));
@@ -36,9 +54,15 @@ quoteForm.addEventListener('submit', async (event) => {
   button.textContent = 'Calculating…';
   result.className = 'estimate-result';
   try {
-    const rulesResponse = await fetch('./pricing_rules.json');
-    if (!rulesResponse.ok) throw new Error('Pricing information could not be loaded. Please refresh and try again.');
-    const rules = await rulesResponse.json();
+    let rules = fallbackPricingRules;
+    if (window.location.protocol !== 'file:') {
+      try {
+        const rulesResponse = await fetch('./pricing_rules.json');
+        if (rulesResponse.ok) rules = await rulesResponse.json();
+      } catch {
+        // Use the embedded pricing rules if the external file is unavailable.
+      }
+    }
     const estimate = calculateEstimate(data, rules);
     const reasons = estimate.adjustments.map((item) => `<li>${item}</li>`).join('');
     result.innerHTML = `<p class="estimate-label">Your instant estimated quote</p>
