@@ -43,6 +43,7 @@ Cause and landed fix:
 - The form displayed nine cleaning services plus `Other`, but `pricing_rules.json` supported only four services. Unsupported selections could never return an estimate.
 - Limited the instant-estimate selector to the four services with configured business pricing: Airbnb/Vacation Rental, Standard Home, Deep, and Move Out cleaning.
 - Removed the unreachable custom-service field and its JavaScript branch.
+- Bumped the calculator script URL to `script.js?v=3` so GitHub Pages visitors do not combine the new form with cached older JavaScript.
 - Kept the pricing rates unchanged rather than inventing prices for unsupported services.
 
 ### Cleaning-only focus
