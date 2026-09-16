@@ -1,7 +1,6 @@
 const contactButton = document.querySelector('.contact-trigger');
 const contactPopover = document.querySelector('.contact-popover');
 const serviceSelect = document.querySelector('#serviceSelect');
-const otherField = document.querySelector('#otherField');
 const quoteForm = document.querySelector('#quoteForm');
 const decisionPanel = document.querySelector('.estimate-decision');
 let currentEstimateId = null;
@@ -20,18 +19,9 @@ document.addEventListener('click', (event) => {
   }
 });
 
-function updateOtherField() {
-  const show = serviceSelect.value === 'Other';
-  otherField.classList.toggle('visible', show);
-  otherField.querySelector('textarea').required = show;
-}
-
-serviceSelect.addEventListener('change', updateOtherField);
-
 document.querySelectorAll('[data-service]').forEach((button) => {
   button.addEventListener('click', () => {
     serviceSelect.value = button.dataset.service;
-    updateOtherField();
     document.querySelector('#quote').scrollIntoView({ behavior: 'smooth' });
   });
 });
@@ -75,10 +65,10 @@ quoteForm.addEventListener('submit', async (event) => {
 function calculateEstimate(data, rules) {
   const service = rules.services[data.service];
   const squareFeet = Number(data.squareFeet);
-  const description = `${data.notes || ''} ${data.otherService || ''}`.toLowerCase();
+  const description = `${data.notes || ''}`.toLowerCase();
   if (!Number.isFinite(squareFeet) || squareFeet <= 0) throw new Error('Please enter the home’s square footage.');
   if (!description.trim()) throw new Error('Please describe the work you would like completed.');
-  if (!service) throw new Error('Instant pricing is currently available for Airbnb turnover, standard, deep, and move-out cleaning. Please contact us for a custom quote.');
+  if (!service) throw new Error('Please select one of the available cleaning services.');
 
   let score = 0;
   const adjustments = [];

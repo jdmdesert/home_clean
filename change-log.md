@@ -1,6 +1,6 @@
 # Steadfast & Co. Cleaning Change Log
 
-Last updated: September 15, 2026
+Last updated: September 16, 2026
 
 This document consolidates the requests and final outcomes from the Codex tasks named **website editing** and **App Building**. It is intended to make the website and team app easier to reproduce, audit, or continue later.
 
@@ -31,6 +31,19 @@ Key commits:
 
 - `521ba1e` — Rename site and fix static estimate calculator
 - `401edfb` — Bust cached calculator script
+
+### Calculator service-option correction
+
+Requested:
+
+- Diagnose and repair the calculator after it appeared not to work.
+
+Cause and landed fix:
+
+- The form displayed nine cleaning services plus `Other`, but `pricing_rules.json` supported only four services. Unsupported selections could never return an estimate.
+- Limited the instant-estimate selector to the four services with configured business pricing: Airbnb/Vacation Rental, Standard Home, Deep, and Move Out cleaning.
+- Removed the unreachable custom-service field and its JavaScript branch.
+- Kept the pricing rates unchanged rather than inventing prices for unsupported services.
 
 ### Cleaning-only focus
 
